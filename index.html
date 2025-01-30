@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/icon.png">
+    <title>Commie Clicker</title>
+</head>
+
+<body>
+    
+    <h1 class="title">COMMIE CLICKER</h1>
+
+    <img class="hammerAndSickle" src="images/Hammer_and_Sickle_and_Star.svg">
+
+    <div style="width: 75%; float: right; border-left: 6px solid #fed10a;">
+        <ul class="menu" style="font-size: 16px; ">
+            <li onclick="localStorage.removeItem('localSave'); document.getElementById('toGame').click();">NEW GAME</li>
+            <li onclick="document.getElementById('loadGame').innerHTML = `&emsp; &thinsp; Enter your save file, comrade: <input style='position: absolute;' oninput='loadTextSave(this.value)'>`;">IMPORT SAVE</li>
+            <li style="display: none;" id="resume" onclick="document.getElementById('toGame').click();">RESUME GAME</li>
+            <li onclick="document.getElementById('toSettings').click();">SETTINGS</li>
+        </ul>
+
+        <p class="text" id="loadGame">&emsp; &thinsp; Get to work, comrade! we have nothing to lose but our chains!<p>
+    </div>
+
+    <a href="settings.html" id="toSettings"></a>
+    <a href="game.html" id="toGame"></a>
+
+    <script src="loadSave.js"></script>
+    <script>
+        if(sessionStorage.inGame)sessionStorage.removeItem("inGame");
+        if(localStorage.localSave)document.getElementById("resume").style.display = "block";
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/icon.png">
+    <title>Commie Clicker</title>
+</head>
+
+<body>
+
+    <h1 class="title">COMMIE CLICKER</h1>
+
+    <img class="hammerAndSickle" src="images/Hammer_and_Sickle_and_Star.svg">
+
+    <div style="width: 75%; float: right; border-left: 6px solid #fed10a;">
+        <ul class="menu" style="font-size: 16px; ">
+            <li style="display: none;" onclick="document.getElementById('toStart').click();" id="back">BACK</li>
+            <li style="display: none;"
+                onclick="localStorage.removeItem('localSave'); document.getElementById('toStart').click();" id="reset">
+                RESET SAVE</li>
+            <li style="display: none;" onclick="getSaveText()" id="export">EXPORT SAVE</li>
+            <li style="display: none;" id="resume" onclick="document.getElementById('toGame').click();">RESUME GAME</li>
+            <li onclick="
+            if(localStorage.mute){
+                localStorage.removeItem('mute');
+                this.innerHTML = 'MUTE MUSIC';
+            } else {
+                localStorage.setItem('mute', 'muted');
+                this.innerHTML = 'UNMUTE MUSIC';
+            }
+            " id="mute"></li>
+        </ul>
+
+        <p class="text" id="saveText">&emsp; &thinsp; Look, we needed a third page, okay.
+        <p>
+    </div>
+
+    <a href="index.html" id="toStart"></a>
+    <a href="game.html" id="toGame"></a>
+
+    <script>
+        const comrade = {};
+        if (localStorage.localSave) {
+            document.getElementById("resume").style.display = "";
+            document.getElementById("reset").style.display = "";
+            document.getElementById("export").style.display = "";
+
+            const savedData = JSON.parse(localStorage.getItem("localSave"));
+
+            for (key in savedData) {
+                comrade[key] = savedData[key];
+            };
+        } else document.getElementById("back").style.display = "";
+
+        if(!sessionStorage.inGame){
+            document.getElementById("resume").style.display = "none";
+            document.getElementById("back").style.display = "";
+        }
+        if (localStorage.mute) document.getElementById("mute").innerHTML = "UNMUTE MUSIC";
+        else document.getElementById("mute").innerHTML = "MUTE MUSIC";
+
+        const getSaveText = (e) => {
+            let saveText = [comrade.name.length].concat(
+                comrade.name.split("").map((e) => {
+                    return e.charCodeAt(0);
+                }))
+                .concat([comrade.currentRubles, comrade.totalRubles])
+                .concat(comrade.buildings).join("K").split("").map((e) => {
+                    if (e !== "K") {
+                        return "ABCDEFGHIJ".charAt(Number(e));
+                    } else return e;
+                }).join("");
+            navigator.clipboard.writeText(saveText);
+            //formats save file as text and copies it to clipboard
+            document.getElementById("saveText").innerHTML = "&emsp; &thinsp; Save copied to clipboard, comrade."
+        }
+    </script>
+
+</body>
+
+</html>

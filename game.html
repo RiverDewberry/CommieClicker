@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/icon.png">
+    <title>Commie Clicker</title>
+</head>
+
+<body>
+
+    <audio loop id="music">
+        <source src="music/soviet-anthem1944.mp3">
+    </audio>
+    <div class="container" style="text-align: center; border-left: 6px solid #fed10a; border-right: 6px solid #fed10a;">
+        <span class="text" style="font-size: 32px; border-bottom: 1px solid #fed10a;" id="name" onclick="
+        this.style.display = 'none';
+        document.getElementById('nameInput').value = this.innerHTML;
+        document.getElementById('nameInput').style.display = '';
+        document.getElementById('nameInput').focus();
+        ">???</span>
+        <input id="nameInput" style="display:none;" maxlength="15" size="15" onblur="
+        this.style.display = 'none';
+        this.value = this.value.trim();
+        if(this.value === '')this.value = '???';
+        document.getElementById('name').innerHTML = this.value;
+        document.getElementById('name').style.display = '';
+        comrade.name = this.value;
+        localStorage.setItem('localSave', JSON.stringify(comrade));
+        ">
+        <br>
+        <br>
+        <p class="text" id="rubleCounter">RUBLES: 0</p>
+        <p class="text" id="rpsCounter">RUBLES PER SECOND: 0</p>
+        <button style="background: none; border: none;" id="hammerAndSickle" class="hammerAndSickle"
+            onclick="generateProfit(true); if(!localStorage.mute)document.getElementById('music').play();"
+            onmousedown="document.getElementById('clicker').style.height = '475px'"
+            onmouseup="document.getElementById('clicker').style.height = '500px'">
+            <img id="clicker" class="hammerAndSickle" src="images/Hammer_and_Sickle_and_Star.svg">
+        </button>
+    </div>
+
+    <div class="container" style="text-align: center;">
+        <ul class="menu" style="font-size: 16px;">
+            <li onclick="
+                let temp = pos;
+                pos = 21;
+                id = setInterval(() => {
+                    if (temp < 0) {
+                        clearInterval(id);
+                        document.getElementById('toSettings').click();
+                    } else {
+                        temp -= 0.2;
+                        document.getElementById('hammerAndSickle').style.left = temp + '%';
+                    }
+                }, 5);">SETTINGS</li>
+        </ul>
+
+        <p class="text">"He who does not work, does not eat"</p>
+    </div>
+
+    <div class="container" id="buildingContainer" style="right: 0px; position: absolute; overflow: scroll; height: 98%; text-align: center;
+        border-left: 6px solid #fed10a;">
+        <span class="text" style="font-size: 32px; border-bottom: 1px solid #fed10a;">BUILDINGS</span>
+    </div>
+
+    <a href="settings.html" id="toSettings"></a>
+
+    <script src="game.js"></script>
+    <script>
+        if(!sessionStorage.inGame)sessionStorage.setItem("inGame", "true");
+        if (localStorage.localSave) {
+            const savedData = JSON.parse(localStorage.getItem("localSave"));
+
+            for (key in savedData) {
+                comrade[key] = savedData[key];
+            };
+
+            comrade.name = comrade.name.trim().slice(0, 15);
+            if(comrade.name === "")comrade.name = "???";
+
+            localStorage.setItem("localSave", JSON.stringify(comrade));
+        }
+        document.getElementById("rubleCounter").innerHTML = `RUBLES: ${comrade.currentRubles}`;
+        document.getElementById("name").innerHTML = comrade.name;
+        let rps = 0;
+        for (let i = comrade.buildings.length - 1; i > -1; --i) {
+            rps += buildingInfo[i].production * comrade.buildings[i];
+        }//loops through all of the building types and calculates rubles per second
+        document.getElementById("rpsCounter").innerHTML = `RUBLES PER SECOND: ${rps}`;
+        for (let i = 0; buildingInfo.length > i; ++i) {
+            if (buildingInfo[i].unlocked === false && comrade.totalRubles >= buildingInfo[i].cost)
+                unlockBuilding(buildingInfo[i], i);//pass by reference
+        }//this unlocks building types when the total amount of rubles produced is greater than or equal to the cost of the building
+        setInterval(generateProfit, 1000);
+        let pos = 0;
+        let id = setInterval(() => {
+            if (pos >= 21) {
+                clearInterval(id);
+            } else {
+                pos += 0.2;
+                document.getElementById("hammerAndSickle").style.left = pos + "%";
+            }
+        }, 5);
+    </script>
+</body>
+
+</html>

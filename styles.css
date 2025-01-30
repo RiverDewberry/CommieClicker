@@ -1,0 +1,99 @@
+body {
+    background-color: #770104;
+}
+
+a {
+    display: none;
+}
+
+input {
+    background: none;
+    border: none;
+    border-bottom: 1px dashed #fed10a;
+    color: #0000;
+}
+
+input:focus {
+    outline-style: none;
+    background-image: linear-gradient(to right, #fed10a5f , #7701045f);
+}
+
+.hammerAndSickle {
+    outline-style: none;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 300px;
+    height: 500px;
+}
+
+.title {
+    text-align: center;
+    font-size: 96px;
+    font-family: Courier, monospace;
+    color: #fed10a;
+}
+
+.menu {
+    width: 75%;
+    font-family: Courier, monospace;
+    list-style-type: none;
+    color: #fed10a;
+}
+
+.menu li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.menu li:hover {
+    background-image: linear-gradient(to right, #fed10a5f , #7701045f);
+}
+
+.text {
+    font-family: Courier, monospace;
+    font-size: 16px;
+    color: #fed10a;
+}
+
+.container {
+    width: 33%;
+    float: left;
+}
+
+input#nameInput{
+    font-size: 32px;
+    background: none;
+    color: #fed10a;
+    text-align: center;
+    font-family: Courier, monospace;
+}
+
+.buildingImage {
+    margin-left: 4px;
+    max-width: 90px;
+    max-height: 90px;
+    width: auto;
+    float: left;
+}
+
+.building {
+    padding-right: 10px;
+    float: right;
+    color: #fed10a;
+    border-left: 1px #fed10a solid;
+    font-family: Courier, monospace;
+}
+
+.building button{
+    margin-top: -10px;
+    margin-bottom: -10px;
+    color: #fed10a;
+    font-size: 20px;
+    border: none;
+    background: none;
+}
+
+.buildingDisplay {
+    border-bottom: 1px #fed10a solid;
+}
