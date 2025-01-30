@@ -1,14 +1,14 @@
-### why does this exist?
+### Why does this exist?
 
 This was a school assignment, this repo exists only to make this work available for those who may want it
 
 This project was made by River, Darcy, and Grady
 
-### how do I run the code?
+### How do I run the code?
 
-clone the repo and open index.html, this project can be run in a file context
+Copy or clone the repo and open index.html, this project can be run in a file context
 
-### what do the files do?
+### What do the files do?
 
 the images and music directories should be self explanitory
 
